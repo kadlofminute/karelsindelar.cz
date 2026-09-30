@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karel Šindelář — automatizace, procesy a veřejné zakázky</title>
+<meta name="description" content="Navrhuji a nasazuji AI nástroje a firemní procesy. Specializace na veřejné zakázky, rozpočtování a automatizaci opakované agendy.">
+<meta name="author" content="Karel Šindelář">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:title" content="Karel Šindelář — automatizace, procesy a veřejné zakázky">
+<meta property="og:description" content="Navrhuji a nasazuji AI nástroje a firemní procesy. Specializace na veřejné zakázky, rozpočtování a automatizaci opakované agendy.">
+<meta property="og:url" content="https://karelsindelar.cz/">
+<link rel="canonical" href="https://karelsindelar.cz/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231F3864'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' fill='%23fff' text-anchor='middle'%3EKŠ%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --ink:#14181d;
+    --body:#4a5561;
+    --muted:#7b8794;
+    --accent:#1f3864;
+    --accent-soft:#eef2f8;
+    --bg:#fbfaf8;
+    --card:#ffffff;
+    --line:#e6e3dd;
+    --max:1080px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--body);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:17px; line-height:1.7; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 28px}
+  a{color:var(--accent)}
+
+  /* ---------- nav ---------- */
+  header{position:sticky; top:0; z-index:20; background:rgba(251,250,248,.88);
+         backdrop-filter:saturate(180%) blur(12px); border-bottom:1px solid transparent;
+         transition:border-color .2s}
+  header.stuck{border-bottom-color:var(--line)}
+  .nav{display:flex; align-items:center; justify-content:space-between; height:74px; gap:24px}
+  .brand{font-size:16px; font-weight:600; color:var(--ink); letter-spacing:.2px; text-decoration:none}
+  .brand span{color:var(--muted); font-weight:400}
+  .navlinks{display:flex; gap:30px; align-items:center}
+  .navlinks a{color:var(--body); text-decoration:none; font-size:15px}
+  .navlinks a:hover{color:var(--accent)}
+  .btn{display:inline-block; background:var(--accent); color:#fff !important; text-decoration:none;
+       padding:11px 22px; border-radius:999px; font-size:15px; font-weight:500;
+       transition:transform .15s ease, box-shadow .15s ease}
+  .btn:hover{transform:translateY(-1px); box-shadow:0 8px 22px rgba(31,56,100,.18)}
+  .btn.ghost{background:transparent; color:var(--accent) !important; border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--accent); box-shadow:none}
+
+  /* ---------- hero ---------- */
+  .hero{padding:104px 0 96px}
+  .eyebrow{font-size:12.5px; letter-spacing:1.6px; text-transform:uppercase; color:var(--muted);
+           margin:0 0 22px}
+  h1{font-size:clamp(38px,5.4vw,62px); line-height:1.12; letter-spacing:-.02em;
+     color:var(--ink); font-weight:600; margin:0 0 26px; max-width:16ch}
+  .lede{font-size:clamp(18px,2.1vw,21px); line-height:1.65; max-width:56ch; margin:0 0 38px}
+  .cta{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
+
+  /* ---------- sections ---------- */
+  section{padding:88px 0; border-top:1px solid var(--line)}
+  .label{font-size:12.5px; letter-spacing:1.6px; text-transform:uppercase; color:var(--muted); margin:0 0 18px}
+  h2{font-size:clamp(27px,3.2vw,36px); line-height:1.25; letter-spacing:-.015em;
+     color:var(--ink); font-weight:600; margin:0 0 18px; max-width:22ch}
+  .intro{max-width:60ch; margin:0 0 52px; font-size:18px}
+
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:26px}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:16px;
+        padding:38px 34px 34px; transition:box-shadow .2s ease, transform .2s ease}
+  .card:hover{box-shadow:0 14px 40px rgba(20,24,29,.06); transform:translateY(-2px)}
+  .card h3{font-size:21px; line-height:1.3; color:var(--ink); font-weight:600; margin:0 0 8px; letter-spacing:-.01em}
+  .card p.sub{margin:0 0 22px; color:var(--muted); font-size:15.5px}
+  .card ul{list-style:none; margin:0; padding:0}
+  .card li{position:relative; padding-left:24px; margin-bottom:11px; font-size:16px; line-height:1.6}
+  .card li:last-child{margin-bottom:0}
+  .card li::before{content:""; position:absolute; left:2px; top:11px; width:7px; height:7px;
+                   border-radius:50%; background:var(--accent); opacity:.42}
+
+  .three{display:grid; grid-template-columns:repeat(3,1fr); gap:26px}
+  .mini h3{font-size:17.5px; line-height:1.35; color:var(--ink); font-weight:600; margin:0 0 7px}
+  .mini p{margin:0; font-size:15.5px; line-height:1.62}
+
+  /* ---------- result ---------- */
+  .result{background:var(--accent-soft); border-radius:20px; padding:52px 48px;
+          display:grid; grid-template-columns:210px 1fr; gap:44px; align-items:center}
+  .stat{text-align:left}
+  .stat .big{font-size:60px; line-height:1; font-weight:600; color:var(--accent); letter-spacing:-.03em}
+  .stat .cap{font-size:14.5px; color:var(--body); margin-top:10px; line-height:1.5}
+  .result p{margin:0; font-size:17.5px; line-height:1.72; color:var(--ink)}
+  .result .who{display:block; margin-top:16px; font-size:14.5px; color:var(--muted)}
+
+  /* ---------- steps ---------- */
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:34px; counter-reset:s}
+  .step{counter-increment:s}
+  .step::before{content:counter(s,decimal-leading-zero); display:block; font-size:13px;
+                letter-spacing:1.4px; color:var(--accent); opacity:.55; margin-bottom:14px; font-weight:600}
+  .step h3{font-size:18px; line-height:1.35; color:var(--ink); font-weight:600; margin:0 0 8px}
+  .step p{margin:0; font-size:15.5px; line-height:1.62}
+
+  /* ---------- contact ---------- */
+  .contact{display:grid; grid-template-columns:1.15fr 1fr; gap:56px; align-items:start}
+  .clines{margin:0; padding:0; list-style:none}
+  .clines li{margin-bottom:16px}
+  .clines .k{display:block; font-size:12.5px; letter-spacing:1.4px; text-transform:uppercase;
+             color:var(--muted); margin-bottom:3px}
+  .clines a{font-size:19px; text-decoration:none; color:var(--ink); font-weight:500}
+  .clines a:hover{color:var(--accent)}
+  .idbox{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:30px 28px;
+         font-size:14.5px; line-height:1.75; color:var(--body)}
+  .idbox strong{color:var(--ink); font-weight:600}
+
+  footer{border-top:1px solid var(--line); padding:32px 0 44px; font-size:14px; color:var(--muted)}
+  .fline{display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap}
+
+  @media (max-width:860px){
+    .navlinks a:not(.btn){display:none}
+    .hero{padding:72px 0 64px}
+    section{padding:64px 0}
+    .two,.three,.steps,.contact{grid-template-columns:1fr; gap:22px}
+    .result{grid-template-columns:1fr; padding:38px 30px; gap:26px}
+    .stat .big{font-size:52px}
+    .card{padding:32px 26px 28px}
+  }
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="brand" href="#top">Karel Šindelář <span>· automatizace a zakázky</span></a>
+    <nav class="navlinks">
+      <a href="#sluzby">Co dělám</a>
+      <a href="#vysledek">Výsledky</a>
+      <a href="#spoluprace">Spolupráce</a>
+      <a class="btn" href="#kontakt">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<a id="top"></a>
+<div class="wrap hero">
+  <p class="eyebrow">Karel Šindelář · IČO 29891558</p>
+  <h1>Zautomatizuji práci, kterou dnes děláte ručně.</h1>
+  <p class="lede">Navrhuji a nasazuji AI nástroje a firemní procesy — a sám je používám
+    tam, kde na tom nejvíc záleží: v rozpočtech a veřejných zakázkách. Od návrhu
+    přes nasazení až po provoz a zaškolení lidí.</p>
+  <div class="cta">
+    <a class="btn" href="#kontakt">Domluvit si schůzku</a>
+    <a class="btn ghost" href="#sluzby">Co konkrétně dělám</a>
+  </div>
+</div>
+
+<section id="sluzby">
+  <div class="wrap">
+    <p class="label">Co dělám</p>
+    <h2>Dvě oblasti, které se navzájem drží</h2>
+    <p class="intro">Automatizaci nestavím teoreticky. Stavím ji na agendě, kterou sám
+      denně dělám — a proto vím, kde se v ní ztrácí čas.</p>
+
+    <div class="two">
+      <div class="card">
+        <h3>AI automatizace a firemní procesy</h3>
+        <p class="sub">Aby se opakovaná práce dělala sama a lidé dělali to ostatní.</p>
+        <ul>
+          <li>Zmapování procesu a pojmenování míst, kde se práce zasekává</li>
+          <li>Automatizace rutinní agendy — sběr dat, třídění, hlídání termínů, reporting</li>
+          <li>Nasazení AI nástrojů do reálného provozu, ne do prezentace</li>
+          <li>Zaškolení týmu, aby systém běžel i beze mě</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Veřejné zakázky a rozpočtování</h3>
+        <p class="sub">Od vypsání zakázky po podanou nabídku.</p>
+        <ul>
+          <li>Monitoring vypsaných zakázek a jejich filtrování na to, co má smysl</li>
+          <li>Kontrola zadávací dokumentace, slepých výkazů a kvalifikačních podmínek</li>
+          <li>Rozpočty, nacenění a poptávky u dodavatelů</li>
+          <li>Kompletace nabídky a hlídání lhůt až do odeslání</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dalsi">
+  <div class="wrap">
+    <p class="label">Dále umím</p>
+    <div class="three">
+      <div class="mini">
+        <h3>IT poradenství a cloud</h3>
+        <p>Google Workspace, sdílené disky, přístupová práva a pořádek v datech,
+           který vydrží i růst týmu.</p>
+      </div>
+      <div class="mini">
+        <h3>Technické podklady a návrhy</h3>
+        <p>Příprava technických návrhů, podkladů a odborných studií pro rozhodování
+           i pro nabídky.</p>
+      </div>
+      <div class="mini">
+        <h3>Školení a lektorská činnost</h3>
+        <p>Kurzy a zaškolení na míru — hlavně k praktickému používání AI nástrojů
+           v běžné firemní práci.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vysledek">
+  <div class="wrap">
+    <p class="label">Výsledek</p>
+    <h2>Čím se to dá změřit</h2>
+    <div class="result">
+      <div class="stat">
+        <div class="big">21</div>
+        <div class="cap">zpracovaných zakázek<br>za jediný měsíc</div>
+      </div>
+      <div>
+        <p>U dodavatele fotovoltaických elektráren jsem nasadil automatizovaný monitoring
+          veřejných zakázek a přestavěl celý proces od zachycení zakázky po odeslanou
+          nabídku. Průchodnost stoupla z původních dvou až tří zpracovaných zakázek
+          měsíčně na jedenadvacet — beze změny počtu lidí.</p>
+        <span class="who">Klient si nepřeje být jmenován.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="spoluprace">
+  <div class="wrap">
+    <p class="label">Jak to probíhá</p>
+    <h2>Tři kroky, žádné dlouhé rozjezdy</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>Úvodní schůzka</h3>
+        <p>Půl hodiny nad tím, co vás reálně zdržuje. Zdarma a nezávazně.</p>
+      </div>
+      <div class="step">
+        <h3>Návrh a odhad</h3>
+        <p>Dostanete popis řešení, cenu a termín. Než cokoli začnu, víte, do čeho jdete.</p>
+      </div>
+      <div class="step">
+        <h3>Nasazení a provoz</h3>
+        <p>Systém spustím, zaškolím lidi a podle dohody se starám i o provoz.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt">
+  <div class="wrap">
+    <p class="label">Kontakt</p>
+    <h2>Napište mi, co vás zdržuje</h2>
+    <p class="intro">Ozvu se zpravidla do jednoho pracovního dne.</p>
+    <div class="contact">
+      <ul class="clines">
+        <li>
+          <span class="k">E-mail</span>
+          <a href="mailto:info@karelsindelar.cz">info@karelsindelar.cz</a>
+        </li>
+        <li>
+          <span class="k">Telefon</span>
+          <a href="tel:+420799906747">799 906 747</a>
+        </li>
+        <li>
+          <span class="k">Fakturace</span>
+          <a href="mailto:fakturace@karelsindelar.cz">fakturace@karelsindelar.cz</a>
+        </li>
+      </ul>
+      <div class="idbox">
+        <strong>Karel Šindelář</strong><br>
+        Na Návsi 61<br>
+        277 38 Mělnické Vtelno – Vysoká Libeň<br><br>
+        IČO: <strong>29891558</strong><br>
+        Zapsán v živnostenském rejstříku vedeném Městským úřadem Mělník.<br>
+        Nejsem plátce DPH.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap fline">
+    <div>© 2026 Karel Šindelář · IČO 29891558</div>
+    <div>Mělnické Vtelno, Česká republika</div>
+  </div>
+</footer>
+
+<script>
+  var h = document.getElementById('hdr');
+  var onScroll = function(){ h.classList.toggle('stuck', window.scrollY > 8); };
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+</script>
+</body>
+</html>
